@@ -1,16 +1,16 @@
-function computations(X, Y)
+function [J, Jcv, JTest, theta] = computations(X, Y)
   
   % preparing data for calculation
   % results are taken from day 2 to end so previous day will define next day closing price
-  lambda = 0.5;
+  lambda = 1;
   [m, n] = size(X);
+  % X = featureScalling(X);
 
-  % setting up test set count to 20%
-  testSetCount = ceil((20/100) * m);
+  % setting up test set count to 10%
+  testSetCount = ceil((10/100) * m);
 
   % setting up crossvalidation set count to 20%
-  cvSetCount = ceil((20/100) * m);
-
+  cvSetCount = ceil((10/100) * m);
 
   % getting subsets for training and tests
   trainingSet = X(1: end - testSetCount - cvSetCount, :);
@@ -21,24 +21,33 @@ function computations(X, Y)
   % Test set
   testSet = X(end - cvSetCount: end, :);
   testResults = Y(end - cvSetCount: end, :);
-
   initial_theta = zeros(size(X,2), 1);
-  J = costFunction(trainingSet, trainingResults, initial_theta, lambda);
-  fprintf("Training set\n")
-  fprintf("[Training set] Cost with initial theta: %f \n", J);
+  
+  % [J, grad] = costFunction(trainingSet, trainingResults, initial_theta, lambda);
+  % fprintf("Training set\n")
+  % fprintf("[Training set] Cost with initial theta: %f \n", J);
 
   %  Set options for fminunc
-  options = optimset('GradObj', 'on', 'MaxIter', 500);
+  options = optimset('GradObj', 'on', 'MaxIter', 1500);
   %  Run fminunc to obtain the optimal theta
   %  This function will return theta and the cost 
+  warning("off");
   [theta, cost] = ...
-    fminunc(@(t)(costFunction(trainingSet, trainingResults, t, lambda, i)), initial_theta, options);
+    fminunc(@(t)(costFunction(trainingSet, trainingResults, t, lambda)), initial_theta, options);
+  warning("on");
+  fprintf("\nTraining set\n")
+  [J, grad] = costFunction(trainingSet, trainingResults, theta, lambda);
   fprintf("[Training set] Cost with optimal theta: %f \n", cost);
 
   fprintf("CrossValidation set (%d) \n", cvSetCount)
-  J = costFunction(cvSet, cvResults, theta, lambda, i);
-  fprintf("[Cross Validation set] Cost with optimal theta: %f \n \n", J);
+  [Jcv, grad] = costFunction(cvSet, cvResults, theta, lambda);
+  fprintf("[Cross Validation set] Cost with optimal theta: %f \n", Jcv);
 
-  % fprintf("Test set (%d) \n", testSetCount)
-  % J = costFunction(testSet, testResults, theta);
-  % fprintf("[Test set] Cost with optimal theta: %f \n", J);
+  fprintf("Test set (%d) \n", testSetCount)
+  [JTest, grad] = costFunction(testSet, testResults, theta, lambda);
+  fprintf("[Test set] Cost with optimal theta: %f \n", JTest);
+  
+  J;
+  Jcv;
+  JTest;
+  theta;
