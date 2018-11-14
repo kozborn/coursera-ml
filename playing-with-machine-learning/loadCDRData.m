@@ -1,23 +1,38 @@
 function loadCDRData()
-  csvread('2000cdr.csv');
-  X = [ones(size(ans,1),1), ans];
-  Y = [X(:,end)];
-  X(:, end) = [];
-  X;
-  Y;
-  initial_theta = zeros(size(X,2), 1);
-  J = costFunction(X,Y,initial_theta)
-  fprintf("Normal Equation \n");
-  t = normalEquation(X,Y)
-  J = costFunction(X,Y,t)
-  %  Set options for fminunc
-  options = optimset('GradObj', 'on', 'MaxIter', 400);
-  %  Run fminunc to obtain the optimal theta
-  %  This function will return theta and the cost 
-  [theta, cost] = ...
-	  fminunc(@(t)(costFunction(X, Y, t)), initial_theta, options);
-   fprintf("Fminunc \n");
-   theta
-   cost
+  data = csvread('10cdr.csv');
+  % preparing data for calculation
+  % features are taken from day 1 to end - 1 
+  X = [ones(size(data, 1) -1, 1) data(1:end -1 , 1:end -1)]
+  Y = data(2:end, end);
+  fprintf("D = 1 \n")
+  computations(X, Y);
+  fprintf("\n \n")
+
+  fprintf("D = 2 \n")
+  X = [X X(:,2).^2]
+  computations(X, Y);
+  fprintf("\n \n")
+
+  fprintf("D = 3 \n")
+  X = [X X(:,3).^3]
+  
+  computations(X, Y);
+  fprintf("\n \n")
+
+  fprintf("D = 4 \n")
+  X = [X X(:,4).^4]
+  
+  computations(X, Y);
+  fprintf("\n \n")
+  
+  fprintf("D = 5 \n")
+  X = [X X(:,5).^5]
+  
+  computations(X, Y);
+  fprintf("\n \n")
+  % t = normalEquation(X,Y)
+  % J = costFunction(X,Y,t)
+
+  
   
 endfunction
