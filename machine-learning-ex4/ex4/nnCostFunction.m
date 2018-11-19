@@ -29,10 +29,9 @@ m = size(X, 1);
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
-
+y
 
 y_matrix = eye(num_labels)(y,:);
-
 a1 = [ones(m, 1), X];
 z1 = a1*Theta1';
 m1 = size(z1, 1);
