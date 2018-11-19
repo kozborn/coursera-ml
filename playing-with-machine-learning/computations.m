@@ -1,10 +1,8 @@
-function [J, Jcv, JTest, theta] = computations(X, Y)
+function [J, Jcv, JTest, theta] = computations(X, Y, lambda)
   
   % preparing data for calculation
   % results are taken from day 2 to end so previous day will define next day closing price
-  lambda = 1;
   [m, n] = size(X);
-  % X = featureScalling(X);
 
   % setting up test set count to 10%
   testSetCount = ceil((10/100) * m);

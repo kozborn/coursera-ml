@@ -9,6 +9,6 @@ function [J, grad] = costFunction(X, y, t, lambda)
    regGrad = (lambda/m).*t;
    regGrad(1) = 0;
    J;
-   grad = grad+ regGrad;
+   grad = grad + regGrad;
 
 endfunction
