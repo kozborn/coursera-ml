@@ -1,5 +1,5 @@
 function loadCDRData()
-  data = csvread('all2.csv');
+  data = csvread('cdr.csv');
   % preparing data for calculation
   % features are taken from day 1 to end - 1 
   X = [ones(size(data, 1) -1, 1) data(1:end -1 , 1:end)];
