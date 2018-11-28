@@ -22,20 +22,29 @@ sigma = 0.3;
 %  Note: You can compute the prediction error using 
 %        mean(double(predictions ~= yval))
 %
-params_vec = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]';
+% params_vec = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]';
 
-predictions_err = zeros(length(params_vec) * zeros(length(params_vec)), 1);
+% predictions_err = zeros(length(params_vec), zeros(length(params_vec)));
 
-for i = 1:length(params_vec)
-  tmpC = params_vec(i);
-  for j = 1:length(params_vec)
-    tmpSigma = params_vec(j);
-    model = svmTrain(X, y, tmpC, @(x1, x2) gaussianKernel(x1, x2, tmpSigma));
-    predictions = svmPredict(model, Xval);
-    predictions_err(i) = mean(double(predictions ~= yval));
-endfor
+% for i = 1:length(params_vec)
+%   tmpC = params_vec(i);
+%   for j = 1:length(params_vec)
+%     tmpSigma = params_vec(j);
+%     model = svmTrain(X, y, tmpC, @(x1, x2) gaussianKernel(x1, x2, tmpSigma));
+%     predictions = svmPredict(model, Xval);
+%     predictions_err(i,j) = mean(double(predictions ~= yval));
+%   endfor
+% endfor
 
-predictions_err
+% predictions_err;
+
+% minVal = min(min(predictions_err));
+% [row, col] = find(predictions_err == minVal);
+
+% C = params_vec(row)
+% sigma = params_vec(col)
+C = 1
+sigma = 0.1
 
 % =========================================================================
 
