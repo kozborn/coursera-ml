@@ -97,14 +97,12 @@ while ~isempty(email_contents)
     %       str2). It will return 1 only if the two strings are equivalent.
     %
 
+    % small_list = {'alpha', 'bravo', 'charlie', 'delta', 'echo'}
+    % match = strcmp('bravo', small_list)
+    % find(match)
 
-
-
-
-
-
-
-
+    match = strcmp(str, vocabList);
+    word_indices = [word_indices, find(match)];
 
     % =============================================================
 
