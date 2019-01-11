@@ -6,6 +6,7 @@ function loadProcadData()
   Y = data(2:end, end);
  
   calculateAndPlotData(X, Y);
+  
   % after above I choose lamba 2
   [m, n] = size(X);
   figure; hold on;
